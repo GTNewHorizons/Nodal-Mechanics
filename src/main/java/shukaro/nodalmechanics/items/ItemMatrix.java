@@ -35,7 +35,7 @@ public class ItemMatrix extends Item {
         this.setMaxStackSize(1);
     }
 
-    public boolean isAttuned(ItemStack stack) {
+    public static boolean isAttuned(ItemStack stack) {
         return stack.hasTagCompound() && stack.getTagCompound().hasKey("Aspects");
     }
 
