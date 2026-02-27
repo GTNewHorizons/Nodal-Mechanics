@@ -35,13 +35,13 @@ public class ItemMatrix extends Item {
         this.setMaxStackSize(1);
     }
 
+    public static boolean isAttuned(ItemStack stack) {
+        return stack.hasTagCompound() && stack.getTagCompound().hasKey("Aspects");
+    }
+
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        if (stack.hasTagCompound()) {
-            return this.getUnlocalizedName() + ".attuned";
-        } else {
-            return this.getUnlocalizedName() + ".unattuned";
-        }
+        return this.getUnlocalizedName() + (isAttuned(stack) ? ".attuned" : ".unattuned");
     }
 
     @Override
@@ -74,20 +74,20 @@ public class ItemMatrix extends Item {
     @Override
     @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack itemStack) {
-        return itemStack.hasTagCompound() ? EnumRarity.uncommon : EnumRarity.common;
+        return isAttuned(itemStack) ? EnumRarity.uncommon : EnumRarity.common;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public boolean hasEffect(ItemStack itemStack, int pass) {
-        return itemStack.hasTagCompound();
+        return isAttuned(itemStack);
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     @SuppressWarnings("unchecked")
     public void addInformation(ItemStack itemStack, EntityPlayer player, List list, boolean advancedTooltips) {
-        if (itemStack.hasTagCompound()) {
+        if (isAttuned(itemStack)) {
             NBTTagCompound tagCompound = itemStack.getTagCompound();
             AspectList aspectList = new AspectList();
             aspectList.readFromNBT(tagCompound);

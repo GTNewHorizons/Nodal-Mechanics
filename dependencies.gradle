@@ -8,5 +8,15 @@ dependencies {
     api("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
     api("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
 
-    runtimeOnly("com.github.GTNewHorizons:Baubles:1.0.4:dev")
+    runtimeOnly("com.github.GTNewHorizons:Baubles-Expanded:2.2.6-GTNH:dev")
 }
+
+project.getConfigurations()
+        .all(c -> {
+            final DependencySubstitutions ds = c.getResolutionStrategy()
+                    .getDependencySubstitution();
+            ds.substitute(ds.module("com.github.GTNewHorizons:Baubles"))
+                    .using(ds.module("com.github.GTNewHorizons:Baubles-Expanded:2.2.6-GTNH"))
+                    .withClassifier("dev")
+                    .because("Baubles-Expanded replaces Baubles");
+        });
