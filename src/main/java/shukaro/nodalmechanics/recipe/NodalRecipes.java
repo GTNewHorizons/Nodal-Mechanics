@@ -24,12 +24,10 @@ public class NodalRecipes {
     public static ShapedArcaneRecipe sameAttuneRecipe;
     public static InfusionRecipe variedNodeRecipe;
     public static InfusionRecipe sameNodeRecipe;
-    private ItemStack lapotronCrystal;
-    private ItemStack balancedShard;
 
     public NodalRecipes() {
-        lapotronCrystal = new ItemStack(Ic2Items.lapotronCrystal.getItem(), 1, OreDictionary.WILDCARD_VALUE);
-        balancedShard = ItemApi.getItem("itemShard", 6);
+        ItemStack lapotronCrystal = new ItemStack(Ic2Items.lapotronCrystal.getItem(), 1, OreDictionary.WILDCARD_VALUE);
+        ItemStack balancedShard = ItemApi.getItem("itemShard", 6);
         matrixRecipe = new InfusionRecipe(
                 "NODECATALYZATION",
                 new ItemStack(NodalItems.itemMatrix),
