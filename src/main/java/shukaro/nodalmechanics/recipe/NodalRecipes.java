@@ -24,14 +24,10 @@ public class NodalRecipes {
     public static ShapedArcaneRecipe sameAttuneRecipe;
     public static InfusionRecipe variedNodeRecipe;
     public static InfusionRecipe sameNodeRecipe;
-    private ItemStack lapotronCrystal;
-    private ArrayList<ItemStack> circuitAdvancedList;
-    private ItemStack balancedShard;
 
     public NodalRecipes() {
-        lapotronCrystal = new ItemStack(Ic2Items.lapotronCrystal.getItem(), 1, OreDictionary.WILDCARD_VALUE);
-        circuitAdvancedList = OreDictionary.getOres("circuitAdvanced");
-        balancedShard = ItemApi.getItem("itemShard", 6);
+        ItemStack lapotronCrystal = new ItemStack(Ic2Items.lapotronCrystal.getItem(), 1, OreDictionary.WILDCARD_VALUE);
+        ItemStack balancedShard = ItemApi.getItem("itemShard", 6);
         matrixRecipe = new InfusionRecipe(
                 "NODECATALYZATION",
                 new ItemStack(NodalItems.itemMatrix),
@@ -135,18 +131,7 @@ public class NodalRecipes {
 
     @SuppressWarnings("unchecked")
     public void initRecipes() {
-        for (ItemStack circuitAdvanced : circuitAdvancedList) {
-            ThaumcraftApi.addInfusionCraftingRecipe(
-                    "NODECATALYZATION",
-                    new ItemStack(NodalItems.itemMatrix),
-                    10,
-                    new AspectList().add(DarkAspects.SLOTH, 16).add(DarkAspects.PRIDE, 16).add(Aspect.AURA, 32)
-                            .add(Aspect.MAGIC, 32),
-                    lapotronCrystal,
-                    new ItemStack[] { new ItemStack(ForbiddenItems.deadlyShards, 1, 3), balancedShard,
-                            new ItemStack(ForbiddenItems.deadlyShards, 1, 5), balancedShard,
-                            new ItemStack(ForbiddenItems.deadlyShards, 1, 5), balancedShard });
-        }
+        ThaumcraftApi.getCraftingRecipes().add(matrixRecipe);
         RecipeAttune recipeAttune = new RecipeAttune();
         ThaumcraftApi.getCraftingRecipes().add(recipeAttune);
         RecipeNode recipeNode = new RecipeNode();
