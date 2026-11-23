@@ -20,7 +20,7 @@ import shukaro.nodalmechanics.research.NodalResearch;
         modid = NodalMechanics.modID,
         name = NodalMechanics.modName,
         version = NodalMechanics.modVersion,
-        dependencies = "required-after:Thaumcraft; required-after:ForbiddenMagic; required-after:TaintedMagic; required-after:AWWayofTime; required-after: IC2")
+        dependencies = "required-after:Thaumcraft")
 public class NodalMechanics {
 
     @SidedProxy(
@@ -47,8 +47,7 @@ public class NodalMechanics {
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent evt) {
-        NodalRecipes recipes = new NodalRecipes();
-        recipes.initRecipes();
+        NodalRecipes.initRecipes();
         proxy.init();
     }
 

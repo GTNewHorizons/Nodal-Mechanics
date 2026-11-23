@@ -6,38 +6,64 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 
+import cpw.mods.fml.common.Loader;
 import fox.spiteful.forbidden.DarkAspects;
 import fox.spiteful.forbidden.items.ForbiddenItems;
 import ic2.core.Ic2Items;
 import shukaro.nodalmechanics.items.NodalItems;
+import shukaro.nodalmechanics.research.NodalResearch;
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.crafting.InfusionRecipe;
 import thaumcraft.api.crafting.ShapedArcaneRecipe;
+import thaumcraft.api.research.ResearchPage;
 
 public class NodalRecipes {
 
-    public static InfusionRecipe matrixRecipe;
     public static ShapedArcaneRecipe variedAttuneRecipe;
     public static ShapedArcaneRecipe sameAttuneRecipe;
     public static InfusionRecipe variedNodeRecipe;
     public static InfusionRecipe sameNodeRecipe;
 
-    public NodalRecipes() {
-        ItemStack lapotronCrystal = new ItemStack(Ic2Items.lapotronCrystal.getItem(), 1, OreDictionary.WILDCARD_VALUE);
-        ItemStack balancedShard = ItemApi.getItem("itemShard", 6);
-        matrixRecipe = new InfusionRecipe(
-                "NODECATALYZATION",
-                new ItemStack(NodalItems.itemMatrix),
-                10,
-                new AspectList().add(DarkAspects.SLOTH, 16).add(DarkAspects.PRIDE, 16).add(Aspect.AURA, 32)
-                        .add(Aspect.MAGIC, 32),
-                lapotronCrystal,
-                new ItemStack[] { new ItemStack(ForbiddenItems.deadlyShards, 1, 3), balancedShard,
-                        new ItemStack(ForbiddenItems.deadlyShards, 1, 5), balancedShard,
-                        new ItemStack(ForbiddenItems.deadlyShards, 1, 5), balancedShard });
+    @SuppressWarnings("unchecked")
+    public static void initRecipes() {
+        if (Loader.isModLoaded("dreamcraft")) {
+            ItemStack lapotronCrystal = new ItemStack(
+                    Ic2Items.lapotronCrystal.getItem(),
+                    1,
+                    OreDictionary.WILDCARD_VALUE);
+            ItemStack balancedShard = ItemApi.getItem("itemShard", 6);
+            InfusionRecipe recipe = new InfusionRecipe(
+                    "NODECATALYZATION",
+                    new ItemStack(NodalItems.itemMatrix),
+                    10,
+                    new AspectList().add(DarkAspects.SLOTH, 16).add(DarkAspects.PRIDE, 16).add(Aspect.AURA, 32)
+                            .add(Aspect.MAGIC, 32),
+                    lapotronCrystal,
+                    new ItemStack[] { new ItemStack(ForbiddenItems.deadlyShards, 1, 3), balancedShard,
+                            new ItemStack(ForbiddenItems.deadlyShards, 1, 5), balancedShard,
+                            new ItemStack(ForbiddenItems.deadlyShards, 1, 5), balancedShard });
+            ThaumcraftApi.getCraftingRecipes().add(recipe);
+            NodalResearch.matrixRecipePage = new ResearchPage(recipe);
+        } else {
+            ShapedArcaneRecipe recipe = new ShapedArcaneRecipe(
+                    "NODECATALYZATION",
+                    new ItemStack(NodalItems.itemMatrix),
+                    new AspectList().add(Aspect.ORDER, 20).add(Aspect.ENTROPY, 20),
+                    "XYX",
+                    "YZY",
+                    "XYX",
+                    'X',
+                    ItemApi.getItem("itemResource", 14),
+                    'Y',
+                    ItemApi.getBlock("blockMagicalLog", 0),
+                    'Z',
+                    ItemApi.getBlock("blockJar", 0));
+            ThaumcraftApi.getCraftingRecipes().add(recipe);
+            NodalResearch.matrixRecipePage = new ResearchPage(recipe);
+        }
         AspectList attuneAspectList = new AspectList().add(Aspect.AIR, 2).add(Aspect.WATER, 2).add(Aspect.FIRE, 2)
                 .add(Aspect.ORDER, 2).add(Aspect.ENTROPY, 2).add(Aspect.EARTH, 2);
         ItemStack variedAttune = new ItemStack(NodalItems.itemMatrix);
@@ -127,11 +153,7 @@ public class NodalRecipes {
                 sameAttune,
                 new ItemStack[] { ItemApi.getItem("itemResource", 14), ItemApi.getItem("itemResource", 14),
                         ItemApi.getItem("itemResource", 14), ItemApi.getItem("itemResource", 14) });
-    }
 
-    @SuppressWarnings("unchecked")
-    public void initRecipes() {
-        ThaumcraftApi.getCraftingRecipes().add(matrixRecipe);
         RecipeAttune recipeAttune = new RecipeAttune();
         ThaumcraftApi.getCraftingRecipes().add(recipeAttune);
         RecipeNode recipeNode = new RecipeNode();
