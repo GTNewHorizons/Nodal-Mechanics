@@ -1,22 +1,10 @@
 // Add your dependencies here
 
 dependencies {
-    api("com.github.GTNewHorizons:ForbiddenMagic:0.9.12-GTNH:dev")
-    api("com.github.GTNewHorizons:Tainted-Magic:7.7.4-GTNH:dev")
-    api("com.github.GTNewHorizons:BloodMagic:1.7.36:dev")
-
     api("thaumcraft:Thaumcraft:1.7.10-4.2.3.5:dev")
-    api("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
 
-    runtimeOnly("com.github.GTNewHorizons:Baubles-Expanded:2.2.11-GTNH:dev")
+    compileOnly("com.github.GTNewHorizons:ForbiddenMagic:0.10.0-GTNH:dev")
+    compileOnly("net.industrial-craft:industrialcraft-2:2.2.828-experimental:dev")
+
+    runtimeOnly("com.github.GTNewHorizons:Baubles-Expanded:2.3.0-GTNH:dev")
 }
-
-project.getConfigurations()
-        .all(c -> {
-            final DependencySubstitutions ds = c.getResolutionStrategy()
-                    .getDependencySubstitution();
-            ds.substitute(ds.module("com.github.GTNewHorizons:Baubles"))
-                    .using(ds.module("com.github.GTNewHorizons:Baubles-Expanded:2.2.11-GTNH"))
-                    .withClassifier("dev")
-                    .because("Baubles-Expanded replaces Baubles");
-        });
